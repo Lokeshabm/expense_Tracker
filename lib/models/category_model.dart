@@ -10,6 +10,24 @@ class CategoryModel {
   final String icon; // Stores icon codePoint string or icon key
   final DateTime createdAt;
 
+  static final Map<int, IconData> _knownIcons = {
+    Icons.restaurant_rounded.codePoint: Icons.restaurant_rounded,
+    Icons.shopping_bag_rounded.codePoint: Icons.shopping_bag_rounded,
+    Icons.directions_car_rounded.codePoint: Icons.directions_car_rounded,
+    Icons.receipt_long_rounded.codePoint: Icons.receipt_long_rounded,
+    Icons.movie_rounded.codePoint: Icons.movie_rounded,
+    Icons.medical_services_rounded.codePoint: Icons.medical_services_rounded,
+    Icons.school_rounded.codePoint: Icons.school_rounded,
+    Icons.category_rounded.codePoint: Icons.category_rounded,
+    Icons.account_balance_wallet_rounded.codePoint:
+        Icons.account_balance_wallet_rounded,
+    Icons.storefront_rounded.codePoint: Icons.storefront_rounded,
+    Icons.laptop_mac_rounded.codePoint: Icons.laptop_mac_rounded,
+    Icons.trending_up_rounded.codePoint: Icons.trending_up_rounded,
+    Icons.card_giftcard_rounded.codePoint: Icons.card_giftcard_rounded,
+    Icons.savings_rounded.codePoint: Icons.savings_rounded,
+  };
+
   const CategoryModel({
     required this.id,
     required this.userId,
@@ -29,8 +47,7 @@ class CategoryModel {
   IconData get iconData {
     final intCodePoint = int.tryParse(icon);
     if (intCodePoint != null) {
-      // ignore: non_const_argument_for_const_parameter
-      return IconData(intCodePoint, fontFamily: 'MaterialIcons');
+      return _knownIcons[intCodePoint] ?? Icons.category_rounded;
     }
     return _getNamedIcon(icon);
   }

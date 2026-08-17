@@ -1,8 +1,7 @@
-import 'dart:io' show Platform;
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite/sqflite.dart';
+import 'sqlite_platform.dart';
 import '../models/category_model.dart';
 import '../models/transaction_model.dart';
 
@@ -48,11 +47,7 @@ class DatabaseHelper {
 
   /// Initializes the SQLite database file in the platform's standard database directory.
   Future<Database> _initDatabase() async {
-    // Ensure databaseFactory is initialized on desktop platforms (Windows, Linux, macOS)
-    if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
-      sqfliteFfiInit();
-      databaseFactory = databaseFactoryFfi;
-    }
+    configureSqlitePlatform();
 
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _databaseName);
